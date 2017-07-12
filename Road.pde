@@ -25,14 +25,12 @@ class Road {
   }
 
   boolean onRoad() {
-    if ((this.endPoints[0].x<mouseX && mouseX<this.endPoints[1].x
+    return (
+      this.endPoints[0].x<mouseX && mouseX<this.endPoints[1].x
       || this.endPoints[1].x<mouseX && mouseX<this.endPoints[0].x
-      ||((this.endPoints[0].x==this.endPoints[1].x)
-      &&abs(this.endPoints[0].x-mouseX)<10))
-      &&(this.endPoints[0].y<mouseY && mouseY<this.endPoints[1].y
-      || this.endPoints[1].y<mouseY && mouseY<this.endPoints[0].y)) 
-      return true;
-    else return false;
+      || ((this.endPoints[0].x==this.endPoints[1].x) && abs(this.endPoints[0].x-mouseX)<10))
+      && (this.endPoints[0].y<mouseY && mouseY<this.endPoints[1].y
+      || this.endPoints[1].y<mouseY && mouseY<this.endPoints[0].y);
   }
 
   void draw() {
