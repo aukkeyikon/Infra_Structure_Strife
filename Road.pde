@@ -127,7 +127,7 @@ class Road {
 
   @Override
     boolean equals(Object obj) {
-    if (obj instanceof Road) return false;
+    if (!(obj instanceof Road)) return false;
     Road r = (Road) obj;
     return (this.endPoints[0].equals(r.endPoints[0]) && this.endPoints[1].equals(r.endPoints[1]))
       || (this.endPoints[0].equals(r.endPoints[1]) && this.endPoints[1].equals(r.endPoints[0]));
