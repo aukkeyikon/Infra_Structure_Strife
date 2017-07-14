@@ -23,7 +23,6 @@ class Road {
     this.state = _s;
   }
 
-
   boolean connected(Road r) {
     //baseから延びる道ならつながっていると判定
     if (this.endPoints[0].equals(playerBase)||this.endPoints[1].equals(playerBase))
