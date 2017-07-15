@@ -4,11 +4,9 @@ final float COS[] = {0, -0.8660254, -0.8660254, 0, 0.86602524, 0.86602524, 0};
 final float SIN[] = {1, 0.5, -0.5, -1, -0.5, 0.5, 1};
 final int fieldSize=1200;
 
-
 PVector  playerBase=new PVector (600, 480, 0);
 Operation_Screen os;
 ArrayList<Road> field;
-
 
 void settings() {
   size(fieldSize+600, fieldSize);
@@ -16,7 +14,6 @@ void settings() {
 
 void setup() {
   noFill();
-
   textAlign(CENTER);
   field=fieldRoadList(fieldSize/2, fieldSize/2);
   println(field.size());
@@ -25,12 +22,12 @@ void setup() {
 
 void draw() {
   background(0);
-  for (Road r : field) {
-    r.draw();
+  for (Road road : field) {
+    road.draw();
   }
   os.draw();
 }
-//繋がってる道
+
 void mousePressed() {
   for (Road r : field) {
     for (Road r2 : field) {
