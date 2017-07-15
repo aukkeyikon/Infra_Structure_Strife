@@ -8,7 +8,7 @@ ArrayList<Road> fieldRoadList(float cx, float cy) {
         for (int k=-2; k<3; k++) {
           center=new PVector(2*k*ROAD_LENGTH*COS[1], 1.5*(j)*ROAD_LENGTH); 
           roadSet.add(new Road(new PVector(cx+center.x+ROAD_LENGTH*COS[i], cy+center.y+ROAD_LENGTH*SIN[i]), 
-            new PVector(cx+center.x+ROAD_LENGTH*COS[i+1], cy+center.y+ROAD_LENGTH*SIN[i+1]), -1));
+            new PVector(cx+center.x+ROAD_LENGTH*COS[i+1], cy+center.y+ROAD_LENGTH*SIN[i+1])));
         }
         break;
       case -2:
@@ -16,14 +16,14 @@ ArrayList<Road> fieldRoadList(float cx, float cy) {
         for (int k=-1; k<2; k++) {
           center=new PVector(2*k*ROAD_LENGTH*COS[1], 1.5*(j)*ROAD_LENGTH); 
           roadSet.add(new Road(new PVector(cx+center.x+ROAD_LENGTH*COS[i], cy+center.y+ROAD_LENGTH*SIN[i]), 
-            new PVector(cx+center.x+ROAD_LENGTH*COS[i+1], cy+center.y+ROAD_LENGTH*SIN[i+1]), -1));
+            new PVector(cx+center.x+ROAD_LENGTH*COS[i+1], cy+center.y+ROAD_LENGTH*SIN[i+1])));
         }
         break;
       default:
         for (int k=-2; k<2; k++) {
           center=new PVector((1+2*k)*ROAD_LENGTH*COS[1], 1.5*(j)*ROAD_LENGTH); 
           roadSet.add(new Road(new PVector(cx+center.x+ROAD_LENGTH*COS[i], cy+center.y+ROAD_LENGTH*SIN[i]), 
-            new PVector(cx+center.x+ROAD_LENGTH*COS[i+1], cy+center.y+ROAD_LENGTH*SIN[i+1]), -1));
+            new PVector(cx+center.x+ROAD_LENGTH*COS[i+1], cy+center.y+ROAD_LENGTH*SIN[i+1])));
         }  
         break;
       }
