@@ -1,3 +1,13 @@
+final float COS [] = new float [7];
+final float SIN [] = new float [7];
+
+void setTrigonometricFunction() {
+  for (int i = 0; i < 7; i += 1) {
+    COS [i] = cos(HALF_PI + THIRD_PI * i);
+    SIN [i] = sin(HALF_PI + THIRD_PI * i);
+  }
+}
+
 ArrayList<Road> fieldRoadList(float cx, float cy) {
   HashSet<Road> roadSet = new HashSet<Road>();
   PVector center;
