@@ -46,7 +46,6 @@ class Road {
   }
 
   void draw() {
-    beginShape(LINES);
     switch(this.state) {
     case 0: //歩道
       drawDottedLine();
@@ -63,61 +62,39 @@ class Road {
       drawDottedLine();
       break;
     default://-1:通常
-      beginShape(LINES);
-      vertex(this.endPoints[0].x, this.endPoints[0].y);
-      vertex(this.endPoints[1].x, this.endPoints[1].y);
+      line(this.endPoints[0].x, this.endPoints[0].y, this.endPoints[1].x, this.endPoints[1].y);
       break;
     }
-    endShape(CLOSE);
     //トンネル
   }
 
   void drawDottedLine() {
-    vertex(this.endPoints[0].x, this.endPoints[0].y);
-    vertex((4*this.endPoints[0].x+this.endPoints[1].x)/5, (4*this.endPoints[0].y+this.endPoints[1].y)/5);
-    vertex((3*this.endPoints[0].x+2*this.endPoints[1].x)/5, (3*this.endPoints[0].y+2*this.endPoints[1].y)/5);
-    vertex((2*this.endPoints[0].x+3*this.endPoints[1].x)/5, (2*this.endPoints[0].y+3*this.endPoints[1].y)/5);
-    vertex((this.endPoints[0].x+4*this.endPoints[1].x)/5, (this.endPoints[0].y+4*this.endPoints[1].y)/5);
-    vertex(this.endPoints[1].x, this.endPoints[1].y);
+    PVector direction=PVector.sub(this.endPoints[1], this.endPoints[0]).div(5);
+    for (int i=0; i<3; i++)
+      drawLine(PVector.add(this.endPoints[0], direction.copy().mult(2*i)), direction);
   }
 
   void drawDoubleLine() {
-    PVector v=PVector.sub(this.endPoints[0], this.endPoints[1]);
-    if (this.endPoints[0].x==this.endPoints[1].x) {
-      vertex(this.endPoints[0].x-ROAD_LENGTH/24, this.endPoints[0].y);
-      vertex(this.endPoints[1].x-ROAD_LENGTH/24, this.endPoints[1].y);
-      vertex(this.endPoints[0].x+ROAD_LENGTH/24, this.endPoints[0].y);
-      vertex(this.endPoints[1].x+ROAD_LENGTH/24, this.endPoints[1].y);
-    } else { 
-      vertex(this.endPoints[0].x-v.x/60, this.endPoints[0].y+v.y/12);
-      vertex(this.endPoints[1].x-v.x/60, this.endPoints[1].y+v.y/12);
-      vertex(this.endPoints[0].x+v.x/60, this.endPoints[0].y-v.y/12);
-      vertex(this.endPoints[1].x+v.x/60, this.endPoints[1].y-v.y/12);
-    }
+    PVector direction = PVector.sub(this.endPoints[1], this.endPoints[0]);
+    PVector normal    = direction.copy().rotate(HALF_PI).setMag(4.0f);
+    drawLine(PVector.add(this.endPoints[0], normal), direction);
+    drawLine(PVector.sub(this.endPoints[0], normal), direction);
   }
 
   void drawHorizontalstripes() {
-    if (this.endPoints[0].x==this.endPoints[1].x) {
-      vertex((4*this.endPoints[0].x+this.endPoints[1].x)/5-ROAD_LENGTH/24, (4*this.endPoints[0].y+this.endPoints[1].y)/5);
-      vertex((4*this.endPoints[0].x+this.endPoints[1].x)/5+ROAD_LENGTH/24, (4*this.endPoints[0].y+this.endPoints[1].y)/5);
-      vertex((3*this.endPoints[0].x+2*this.endPoints[1].x)/5-ROAD_LENGTH/24, (3*this.endPoints[0].y+2*this.endPoints[1].y)/5);
-      vertex((3*this.endPoints[0].x+2*this.endPoints[1].x)/5+ROAD_LENGTH/24, (3*this.endPoints[0].y+2*this.endPoints[1].y)/5);
-      vertex((2*this.endPoints[0].x+3*this.endPoints[1].x)/5-ROAD_LENGTH/24, (2*this.endPoints[0].y+3*this.endPoints[1].y)/5);
-      vertex((2*this.endPoints[0].x+3*this.endPoints[1].x)/5+ROAD_LENGTH/24, (2*this.endPoints[0].y+3*this.endPoints[1].y)/5);
-      vertex((this.endPoints[0].x+4*this.endPoints[1].x)/5-ROAD_LENGTH/24, (this.endPoints[0].y+4*this.endPoints[1].y)/5);
-      vertex((this.endPoints[0].x+4*this.endPoints[1].x)/5+ROAD_LENGTH/24, (this.endPoints[0].y+4*this.endPoints[1].y)/5);
-    } else { 
-      PVector v=PVector.sub(this.endPoints[0], this.endPoints[1]);
-      vertex((4*this.endPoints[0].x+this.endPoints[1].x)/5+v.x/60, (4*this.endPoints[0].y+this.endPoints[1].y)/5-v.y/12);
-      vertex((4*this.endPoints[0].x+this.endPoints[1].x)/5-v.x/60, (4*this.endPoints[0].y+this.endPoints[1].y)/5+v.y/12);
-      vertex((3*this.endPoints[0].x+2*this.endPoints[1].x)/5+v.x/60, (3*this.endPoints[0].y+2*this.endPoints[1].y)/5-v.y/12);
-      vertex((3*this.endPoints[0].x+2*this.endPoints[1].x)/5-v.x/60, (3*this.endPoints[0].y+2*this.endPoints[1].y)/5+v.y/12);
-      vertex((2*this.endPoints[0].x+3*this.endPoints[1].x)/5, (2*this.endPoints[0].y+3*this.endPoints[1].y)/5);
-      vertex((2*this.endPoints[0].x+3*this.endPoints[1].x)/5, (2*this.endPoints[0].y+3*this.endPoints[1].y)/5);
-      vertex((this.endPoints[0].x+4*this.endPoints[1].x)/5, (this.endPoints[0].y+4*this.endPoints[1].y)/5);
-      vertex((this.endPoints[0].x+4*this.endPoints[1].x)/5, (this.endPoints[0].y+4*this.endPoints[1].y)/5);
+    PVector direction=PVector.sub(this.endPoints[1], this.endPoints[0]);
+    PVector normal   =direction.copy().rotate(HALF_PI).setMag(4.0f);
+    direction.div(5);
+    for (int i=0; i<5; i++) {
+      drawLine(PVector.add(this.endPoints[0], direction.copy().mult(i)), normal);
+      drawLine(PVector.add(this.endPoints[0], direction.copy().mult(i)), normal.mult(-1));
     }
   }
+
+  void drawLine(PVector begin, PVector direction) {
+    line(begin.x, begin.y, begin.x+direction.x, begin.y+direction.y);
+  }
+
 
   @Override
     public String toString() {
@@ -128,8 +105,8 @@ class Road {
     boolean equals(Object obj) {
     if (!(obj instanceof Road)) return false;
     Road r = (Road) obj;
-    return (this.endPoints[0].equals(r.endPoints[0]) && this.endPoints[1].equals(r.endPoints[1]))
-      || (this.endPoints[0].equals(r.endPoints[1]) && this.endPoints[1].equals(r.endPoints[0]));
+    return (nearlyEquals(this.endPoints[0], r.endPoints[0]) && nearlyEquals(this.endPoints[1], r.endPoints[1]))
+      || (nearlyEquals(this.endPoints[0], r.endPoints[1]) && nearlyEquals(this.endPoints[1], r.endPoints[0]));
   }
 
   @Override
@@ -139,4 +116,11 @@ class Road {
     result = 31 * result + max(this.endPoints[0].hashCode(), this.endPoints[1].hashCode());
     return result;
   }
+}
+
+final float ALLOWABLE_ERROR = 0.001;
+
+boolean nearlyEquals(PVector v1, PVector v2) {
+  return abs(v1.x - v2.x) < ALLOWABLE_ERROR
+    && abs(v1.y - v2.y) < ALLOWABLE_ERROR;
 }
