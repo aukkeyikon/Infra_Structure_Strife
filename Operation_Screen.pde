@@ -1,17 +1,16 @@
 class Operation_Screen {
-  float posX;
-  float screenWidth;  
-  String turn[]={"Role Dice", "Make Road", "Make Road  \n or \n Bomb!", "Waiting"};
-  String ItemName[]={"Human", "Car", "Construct", "Rail", "Tunnel", "Bomb"};
-  int roadType;
-  Item_Button [] button=new Item_Button [6];
+  int    posX,screenWidth;  
+  int    roadType;
+  String turn[]     = {"Role Dice", "Make Road", "Make Road  \n or \n Bomb!", "Waiting"};
+  String ItemName[] = {"Human", "Car", "Construct", "Rail", "Tunnel", "Bomb"};
+  Button [] button=new Button [6];
 
-  Operation_Screen(float _posX) {
+  Operation_Screen(int _posX) {
     roadType=-1;
     posX=_posX;
     screenWidth=width-posX;
     for (int i=0; i<button.length; i++)
-      button[i]=new Item_Button(ItemName[i], height/3+i*height/9);
+      button[i]=new Button(posX, height/3+i*height/9, screenWidth, height/9, ItemName[i]);
   }
 
   void draw() {
@@ -22,33 +21,24 @@ class Operation_Screen {
     fill(#F4F5F7);
     rect(-1, height/3, screenWidth, height);
     this.drawTurn();
-    for (int i=0; i<button.length; i++)
-      button[i].draw((screenWidth)/2);
-    if (roadType!=-1)this.drawCursor(roadType);
     popMatrix();
+    for (int i=0; i<button.length; i++)
+      button[i].draw();
     noFill();
   }
 
   void drawTurn() {
     stroke(#f4f5f7);
-    textSize(40);
     noFill();
     rect(0, 0, screenWidth, height/3);
-    fill(255);
+    fill(#f4f5f7);
     text(turn[2], (screenWidth)/2, height/8);
-  }
-
-  void drawCursor(int _i) {
-    fill(255, 0, 0);
-    rect(0, height/3+_i*height/9, 100, height/9);
-    fill(#F4F5F7);
-    text("cost \n"+cost(roadType), 50, _i*height/9+height/24*9);
   }
 
   void mousePressed() {
     if (mouseX<posX)return;
     for (int i=0; i<button.length; i++)
-      if (button[i].pressed())roadType=i;
+      if (button[i].bounds())roadType=i;
   }
 
   int cost(int itemType) {
