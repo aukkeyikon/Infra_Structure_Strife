@@ -1,45 +1,43 @@
 import java.util.HashSet;
-final float ROAD_LENGTH = 120;
-final int fieldSize=1200;
+final int FIELD_SIZE=1200;
 
 PVector  playerBase=new PVector (600, 480, 0);
-Operation_Screen os;
+Operation_Screen operationScreen;
 ArrayList<Road> field;
 
 void settings() {
-  size(fieldSize+600, fieldSize);
+  size(FIELD_SIZE/2*3, FIELD_SIZE);
 }
 
 void setup() {
   noFill();
+  textSize(FIELD_SIZE/30);
   textAlign(CENTER);
-  setTrigonometricFunction();
-  field=fieldRoadList(fieldSize/2, fieldSize/2);
+  field=fieldRoadList(FIELD_SIZE/2, FIELD_SIZE/2);
+  operationScreen=new Operation_Screen(FIELD_SIZE);  
   println(field.size());
-  os=new Operation_Screen(fieldSize);
 }
 
 void draw() {
-  background(0);
+  background(#0C0D05);
   for (Road r : field) {
     r.draw();
   }
-  os.draw();
+  operationScreen.draw();
 }
-//繋がってる道
+
 void mousePressed() {
-  println("nyan");
   for (Road r2 : field) {
     for (Road r : field) {
       if ( r.onRoad() ) {//&& r.connected(r2)
         // r.connected(r2)の判定がうまく回ってない
         println("r  "+r);
         println("r2 "+r2+"\n");
-        r.setState(os.roadType);
+        r.setState(operationScreen.roadType);
       }
     }
   }
-  os.mousePressed();
+  operationScreen.mousePressed();
 }
 
 
