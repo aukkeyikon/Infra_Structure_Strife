@@ -1,7 +1,6 @@
 class Road {
   PVector [] endPoints = new PVector[2];
   int state=-1;
-  int player=0;
 
   Road(Road r) {
     this.endPoints[0] = r.endPoints[0].copy();
@@ -22,7 +21,6 @@ class Road {
 
   void setState(int _s) {
     this.state = _s;
-    this.player= 1;
   }
 
   boolean connected(Road r) {
@@ -40,15 +38,14 @@ class Road {
 
   boolean onRoad() {
     return (
-      (this.endPoints[0].x<mouseX && mouseX<this.endPoints[1].x
-      || this.endPoints[1].x<mouseX && mouseX<this.endPoints[0].x)
-      || ((this.endPoints[0].x==this.endPoints[1].x) && abs(this.endPoints[0].x-mouseX)<20))
+      this.endPoints[0].x<mouseX && mouseX<this.endPoints[1].x
+      || this.endPoints[1].x<mouseX && mouseX<this.endPoints[0].x
+      || ((this.endPoints[0].x==this.endPoints[1].x) && abs(this.endPoints[0].x-mouseX)<10))
       && (this.endPoints[0].y<mouseY && mouseY<this.endPoints[1].y
       || this.endPoints[1].y<mouseY && mouseY<this.endPoints[0].y);
   }
 
   void draw() {
-    stroke(255);if(player==1)stroke(#3dfc54);
     switch(this.state) {
     case 0: //歩道
       drawDottedLine();
@@ -121,7 +118,7 @@ class Road {
   }
 }
 
-final float ALLOWABLE_ERROR = 1;
+final float ALLOWABLE_ERROR = 0.001;
 
 boolean nearlyEquals(PVector v1, PVector v2) {
   return abs(v1.x - v2.x) < ALLOWABLE_ERROR

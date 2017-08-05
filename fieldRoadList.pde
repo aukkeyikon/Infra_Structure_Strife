@@ -1,3 +1,13 @@
+final float COS [] = new float [7];
+final float SIN [] = new float [7];
+
+void setTrigonometricFunction() {
+  for (int i = 0; i < 7; i += 1) {
+    COS [i] = cos(HALF_PI + THIRD_PI * i);
+    SIN [i] = sin(HALF_PI + THIRD_PI * i);
+  }
+}
+
 ArrayList<Road> fieldRoadList(float cx, float cy) {
   HashSet<Road> roadSet = new HashSet<Road>();
   PVector center;
@@ -6,24 +16,24 @@ ArrayList<Road> fieldRoadList(float cx, float cy) {
       switch(j) {
       case 0:
         for (int k=-2; k<3; k++) {
-          center=new PVector(2*k*FIELD_SIZE/10*cos(HALF_PI + THIRD_PI), 1.5*(j)*FIELD_SIZE/10); 
-          roadSet.add(new Road(new PVector(cx+center.x+FIELD_SIZE/10*cos(HALF_PI + THIRD_PI*i), cy+center.y+FIELD_SIZE/10*sin(HALF_PI + THIRD_PI*i)), 
-            new PVector(cx+center.x+FIELD_SIZE/10*cos(HALF_PI + THIRD_PI*(i+1)), cy+center.y+FIELD_SIZE/10*sin(HALF_PI + THIRD_PI*(i+1)))));
+          center=new PVector(2*k*ROAD_LENGTH*COS[1], 1.5*(j)*ROAD_LENGTH); 
+          roadSet.add(new Road(new PVector(cx+center.x+ROAD_LENGTH*COS[i], cy+center.y+ROAD_LENGTH*SIN[i]), 
+            new PVector(cx+center.x+ROAD_LENGTH*COS[i+1], cy+center.y+ROAD_LENGTH*SIN[i+1])));
         }
         break;
       case -2:
       case 2:
         for (int k=-1; k<2; k++) {
-          center=new PVector(2*k*FIELD_SIZE/10*cos(HALF_PI + THIRD_PI), 1.5*(j)*FIELD_SIZE/10); 
-          roadSet.add(new Road(new PVector(cx+center.x+FIELD_SIZE/10*cos(HALF_PI + THIRD_PI*i), cy+center.y+FIELD_SIZE/10*sin(HALF_PI + THIRD_PI*i)), 
-            new PVector(cx+center.x+FIELD_SIZE/10*cos(HALF_PI + THIRD_PI*(i+1)), cy+center.y+FIELD_SIZE/10*sin(HALF_PI + THIRD_PI*(i+1)))));
+          center=new PVector(2*k*ROAD_LENGTH*COS[1], 1.5*(j)*ROAD_LENGTH); 
+          roadSet.add(new Road(new PVector(cx+center.x+ROAD_LENGTH*COS[i], cy+center.y+ROAD_LENGTH*SIN[i]), 
+            new PVector(cx+center.x+ROAD_LENGTH*COS[i+1], cy+center.y+ROAD_LENGTH*SIN[i+1])));
         }
         break;
       default:
         for (int k=-2; k<2; k++) {
-          center=new PVector((1+2*k)*FIELD_SIZE/10*cos(HALF_PI + THIRD_PI), 1.5*(j)*FIELD_SIZE/10); 
-          roadSet.add(new Road(new PVector(cx+center.x+FIELD_SIZE/10*cos(HALF_PI + THIRD_PI*i), cy+center.y+FIELD_SIZE/10*sin(HALF_PI + THIRD_PI*i)), 
-            new PVector(cx+center.x+FIELD_SIZE/10*cos(HALF_PI + THIRD_PI*(i+1)), cy+center.y+FIELD_SIZE/10*sin(HALF_PI + THIRD_PI*(i+1)))));
+          center=new PVector((1+2*k)*ROAD_LENGTH*COS[1], 1.5*(j)*ROAD_LENGTH); 
+          roadSet.add(new Road(new PVector(cx+center.x+ROAD_LENGTH*COS[i], cy+center.y+ROAD_LENGTH*SIN[i]), 
+            new PVector(cx+center.x+ROAD_LENGTH*COS[i+1], cy+center.y+ROAD_LENGTH*SIN[i+1])));
         }  
         break;
       }
